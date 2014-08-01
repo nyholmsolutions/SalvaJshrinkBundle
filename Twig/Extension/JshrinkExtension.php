@@ -2,6 +2,7 @@
 
 namespace Salva\JshrinkBundle\Twig\Extension;
 
+use Symfony\Component\DependencyInjection\Container;
 use Salva\JshrinkBundle\Twig\TokenParser\JshrinkTokenParser;
 use Twig_Extension;
 
@@ -10,6 +11,15 @@ use Twig_Extension;
  */
 class JshrinkExtension extends Twig_Extension
 {
+    protected $container;
+    protected $disableOnDebug;
+
+    public function __construct(Container $container = null, $disableOnDebug = null)
+    {
+        $this->container = $container;
+        $this->disableOnDebug = $disableOnDebug;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -24,7 +34,7 @@ class JshrinkExtension extends Twig_Extension
     public function getTokenParsers()
     {
         return array(
-            new JshrinkTokenParser(),
+            new JshrinkTokenParser($this->container, $this->disableOnDebug),
         );
     }
 }
