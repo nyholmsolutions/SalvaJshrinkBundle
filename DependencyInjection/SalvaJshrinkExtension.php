@@ -19,6 +19,10 @@ class SalvaJshrinkExtension extends Extension
         $container
             ->getDefinition('salva_assetic_filter.jshrink')
             ->replaceArgument(0, $config);
+
+        $container
+            ->getDefinition('salva_twig_extension.jshrink')
+            ->replaceArgument(0, $config);
     }
 
     public function getAlias()

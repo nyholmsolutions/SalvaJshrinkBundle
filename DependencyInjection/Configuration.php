@@ -14,6 +14,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->booleanNode('flaggedComments')->defaultTrue()->end()
+                ->booleanNode('disable')->defaultFalse()->end()
             ->end();
 
         return $treeBuilder;

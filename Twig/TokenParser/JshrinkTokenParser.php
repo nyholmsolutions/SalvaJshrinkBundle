@@ -2,7 +2,6 @@
 
 namespace Salva\JshrinkBundle\Twig\TokenParser;
 
-use Symfony\Component\DependencyInjection\Container;
 use Salva\JshrinkBundle\Twig\Node\JshrinkNode;
 use Twig_Token;
 use Twig_TokenParser;
@@ -12,13 +11,11 @@ use Twig_TokenParser;
  */
 class JshrinkTokenParser extends Twig_TokenParser
 {
-    protected $container;
-    protected $disableOnDebug;
+    protected $options;
 
-    public function __construct(Container $container = null, $disableOnDebug = null)
+    public function __construct($options = array())
     {
-        $this->container = $container;
-        $this->disableOnDebug = $disableOnDebug;
+        $this->options = $options;
     }
 
     /**
@@ -34,7 +31,7 @@ class JshrinkTokenParser extends Twig_TokenParser
         }, true);
         $this->parser->getStream()->expect(Twig_Token::BLOCK_END_TYPE);
 
-        if($this->disableOnDebug && $this->container->getParameter("kernel.environment") === 'dev') {
+        if(isset($this->options['disable']) && $this->options['disable'] === true) {
             return $body;
         }
         else {
