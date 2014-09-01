@@ -22,6 +22,11 @@ class JshrinkFilter implements FilterInterface
     
     public function filterDump(AssetInterface $asset)
     {
-        $asset->setContent(Minifier::minify($asset->getContent(), $this->options));
+        if(isset($this->options['disable']) && $this->options['disable'] === true) {
+            $asset->setContent($asset->getContent());
+        }
+        else {
+            $asset->setContent(Minifier::minify($asset->getContent(), $this->options));
+        }
     }
 }
